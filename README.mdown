@@ -7,6 +7,31 @@ Provides an RSS (Atom) Feed of books checked out from the Toronto Public Library
 
 based on [the Perl script by Sacha Chua](http://sachachua.com/wp/2009/03/29/new-library-reminder-script/)
 
+## Dependencies
+
+This script requires:
+
+* [WWW::Mechanize](http://mechanize.rubyforge.org/) -- `sudo gem install mechanize`
+* [Nokogiri](http://github.com/tenderlove/nokogiri) versions newer than 1.2.3 (use HEAD version for now until next official release)
+
+
 ## Instructions
 
-Fill in your library card number and PIN, and run the script (`ruby tpl-rss.rb`)
+Fill in your library card number and PIN, and run the script (`ruby tpl-rss.rb > books.atom`) to generate the feed and save it out to a file.
+
+**Tip:** you can schedule a recurring task using [`cron`](http://en.wikipedia.org/wiki/Cron "cron - Wikipedia, the free encyclopedia") (or Windows Task Scheduler) that will automatically refresh the feed at a set interval. For example, to update the feed on a daily basis, add the following line to your crontab:
+
+    0 0 * * * cd /path/containing/tpl-rss; ./tpl-rss.rb > books.atom
+
+Then you can just add the URL for the books.atom file you've just created to your feed reader and you're all set!
+
+## Changelog
+
+### HEAD
+
+* New Features:
+  * now able to pass in library card number & pin as command-line arguments
+  * raises an error if login credentials are incorrect
+* Bugfixes:
+  * improved shebang
+  * fixed up generated XML to better adhere to Atom standard
