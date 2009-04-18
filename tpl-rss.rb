@@ -58,7 +58,7 @@ feed = Nokogiri::XML::Builder.new do
             updated  Time.now.iso8601
             link     :rel => 'alternate', :href => "#{CATALOGUE_URL}#{clean_href}#catno#{catno}"
             summary(:type => 'html') do
-              text "Due on <strong>#{due_date}</strong>"
+              text "Due on <strong>#{due_date}</strong> (Renewed #{status} times)" # TODO: find out if status is indeed the renew count, as I suspect it is
               text "<br /> <small>&#x2116; #{catno}</small>"
             end
           end # ENTRY
