@@ -57,8 +57,8 @@ feed = Nokogiri::XML::Builder.new do
             id_      "tag:torontopubliclibrary.ca,2008;#{catno}"
             updated  Time.now.iso8601
             link     :rel => 'alternate', :href => "#{CATALOGUE_URL}#{clean_href}#catno#{catno}"
-            summary do
-              cdata "Due on <strong>#{due_date}</strong> <small>Cat no. #{catno}</small>"
+            summary(:type => 'html') do
+              text "Due on <strong>#{due_date}</strong> <small>Cat no. #{catno}</small>"
             end
           end # ENTRY
 
