@@ -58,7 +58,8 @@ feed = Nokogiri::XML::Builder.new do
             updated  Time.now.iso8601
             link     :rel => 'alternate', :href => "#{CATALOGUE_URL}#{clean_href}#catno#{catno}"
             summary(:type => 'html') do
-              text "Due on <strong>#{due_date}</strong> <small>Cat no. #{catno}</small>"
+              text "Due on <strong>#{due_date}</strong>"
+              text "<br /> <small>&#x2116; #{catno}</small>"
             end
           end # ENTRY
 
