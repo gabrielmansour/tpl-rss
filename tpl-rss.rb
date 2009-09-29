@@ -22,6 +22,10 @@ end
 
 @LIBRARY_CARD, @PIN = *ARGV unless ARGV.empty? # ..or optionally, you can pass in your credentials when executing this script from the command line
 
+
+OUTPUT_FILE = ARGV[2] || 'books.atom' # specify a filename here if you want to save the generated atom feed as a file
+
+
 LOGIN_URL = 'https://ezproxy.torontopubliclibrary.ca/login'
 ACCOUNT_URL = 'http://ezproxy.torontopubliclibrary.ca/sso/myacct'
 CATALOGUE_URL = 'http://catalogue.torontopubliclibrary.ca'
@@ -80,3 +84,6 @@ feed = Nokogiri::XML::Builder.new do
 end
 
 puts feed.to_xml
+
+File.open(OUTPUT_FILE, 'w') {|f| f.write feed.to_xml } if OUTPUT_FILE
+
