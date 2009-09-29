@@ -61,7 +61,9 @@ feed = Nokogiri::XML::Builder.new do
           # RENEW^39100049582508^658.84 SWE^1^Sweeney, Susan, 1956-^101 Internet businesses you can start from home : how to choose and build your own successful e-business^
           command, catno, callno, status, author, title = *checkbox['name'].to_s.split(/\^/) if checkbox
           renew_count = (book/"td:nth-child(3)").text.strip
-          due_date = (book/"td:nth-child(4)").text.strip
+          due = (book/"td:nth-child(4)").text.strip
+          due_date = Date.strptime(due, '%d/%m/%Y')
+          due_in = due_date - Date.today
           clean_href = book_link['href'].sub(/\/uhtbin\/cgisirsi\/.*\?/, "/uhtbin/cgisirsi/x/0/0/5/3?") # strip out session information from URL
           
           f.entry do
@@ -71,8 +73,9 @@ feed = Nokogiri::XML::Builder.new do
             updated  Time.now.iso8601
             link     :rel => 'alternate', :href => "#{CATALOGUE_URL}#{clean_href}#catno#{catno}"
             summary(:type => 'html') do
-              text "Due on <strong>#{due_date}</strong>"
-              text " (renewed <strong>#{renew_count}</strong> time#{'s' unless renew_count.to_i==1})" unless renew_count.empty?
+              text "Due on <strong>#{due_date.strftime('%d %B %Y')}</strong>"
+              text " <em>in #{due_in} days</em>"
+              text "<br /> (renewed #{renew_count} time#{'s' unless renew_count.to_i==1})" unless renew_count.empty?
               text "<br /> <small>&#x2116; #{catno}</small>"
             end
           end # ENTRY
