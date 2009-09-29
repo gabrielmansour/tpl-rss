@@ -1,0 +1,9 @@
+# tpl.yml
+# 
+# Please fill in your library card credentials like this:
+#
+#  library_card: 0000000000000
+#  pin: 0000
+#
+library_card: 0000000000000
+pin: 0000

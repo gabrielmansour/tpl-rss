@@ -9,7 +9,16 @@
 require 'rubygems'
 require 'mechanize'
 
-@LIBRARY_CARD, @PIN = '0000000000000', '0000'  # your personal account credentials go here
+# automatically load personal account credentials from the yaml file
+[ [File.dirname(__FILE__), 'tpl.yml'], [ENV['HOME'], '.tpl'] ].each do |path|
+  if File.exists?( file = File.join(*path) )
+    creds = YAML::load_file(file) and (@LIBRARY_CARD, @PIN = creds['library_card'], creds['pin']) and break
+  end
+end
+
+# you can also just enter your credentials here if you'd rather keep everything in one file
+@LIBRARY_CARD ||= '0000000000000'
+@PIN          ||= '0000'
 
 @LIBRARY_CARD, @PIN = *ARGV unless ARGV.empty? # ..or optionally, you can pass in your credentials when executing this script from the command line
 
