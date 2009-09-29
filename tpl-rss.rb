@@ -55,8 +55,8 @@ feed = Nokogiri::XML::Builder.new do
       2.times {  page = page.links_with(:text => 'Your Account').first.click }
 
       (page/"tbody#renewcharge tr").each do |book|
-        book_link = book.at("a")
-        checkbox = book.at("input") # TODO - on next nokogiri release, change at to %
+        book_link = book % "a"
+        checkbox = book % "input"
         unless book_link.nil?
           info = {}
           # RENEW^39100049582508^658.84 SWE^1^Sweeney, Susan, 1956-^101 Internet businesses you can start from home : how to choose and build your own successful e-business^
