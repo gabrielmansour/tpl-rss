@@ -31,7 +31,7 @@ ACCOUNT_URL = 'http://ezproxy.torontopubliclibrary.ca/sso/myacct'
 CATALOGUE_URL = 'http://catalogue.torontopubliclibrary.ca'
 
 ua = WWW::Mechanize.new
-ua.read_timeout = 10
+ua.read_timeout = 30
 
 response = ua.post(LOGIN_URL, :user => @LIBRARY_CARD, :pass => @PIN, :url => ACCOUNT_URL)
 raise "Login Error: Incorrect library card number or PIN." if response.body.match(/Incorrect library card number or PIN. Please try again./)
