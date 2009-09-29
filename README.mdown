@@ -30,6 +30,10 @@ Then you can just add the URL for the books.atom file you've just created to you
 ### HEAD
 
 * New Features:
+  * allows loading of personal account credentials from yaml file
+  * saves outputted XML to a file
+  * allows you to also pass in location of output file as third command-line argument
+
   * now able to pass in library card number & pin as command-line arguments
   * raises an error if login credentials are incorrect
 * Bugfixes:
