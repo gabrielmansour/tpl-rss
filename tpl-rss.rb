@@ -60,6 +60,7 @@ feed = Nokogiri::XML::Builder.new do
         unless book_link.nil?
           # RENEW^39100049582508^658.84 SWE^1^Sweeney, Susan, 1956-^101 Internet businesses you can start from home : how to choose and build your own successful e-business^
           command, catno, callno, status, author, title = *checkbox['name'].to_s.split(/\^/) if checkbox
+          renew_count = (book/"td:nth-child(3)").text.strip
           due_date = (book/"td:nth-child(4)").text.strip
           clean_href = book_link['href'].sub(/\/uhtbin\/cgisirsi\/.*\?/, "/uhtbin/cgisirsi/x/0/0/5/3?") # strip out session information from URL
           
@@ -71,6 +72,7 @@ feed = Nokogiri::XML::Builder.new do
             link     :rel => 'alternate', :href => "#{CATALOGUE_URL}#{clean_href}#catno#{catno}"
             summary(:type => 'html') do
               text "Due on <strong>#{due_date}</strong>"
+              text " (renewed <strong>#{renew_count}</strong> time#{'s' unless renew_count.to_i==1})" unless renew_count.empty?
               text "<br /> <small>&#x2116; #{catno}</small>"
             end
           end # ENTRY
