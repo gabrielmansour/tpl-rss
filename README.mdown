@@ -12,16 +12,16 @@ based on [the Perl script by Sacha Chua](http://sachachua.com/wp/2009/03/29/new-
 This script requires:
 
 * [WWW::Mechanize](http://mechanize.rubyforge.org/) -- `sudo gem install mechanize`
-* [Nokogiri](http://github.com/tenderlove/nokogiri) versions newer than 1.2.3 (use HEAD version for now until next official release)
+* [Nokogiri](http://github.com/tenderlove/nokogiri) versions newer than 1.2.3
 
 
 ## Instructions
 
-Fill in your library card number and PIN, and run the script (`ruby tpl-rss.rb > books.atom`) to generate the feed and save it out to a file.
+Fill in your library card number and PIN, and run the script `ruby tpl-rss.rb` to generate the feed and save it out to a file (by default it's saved as `books.atom`).
 
 **Tip:** you can schedule a recurring task using [`cron`](http://en.wikipedia.org/wiki/Cron "cron - Wikipedia, the free encyclopedia") (or Windows Task Scheduler) that will automatically refresh the feed at a set interval. For example, to update the feed on a daily basis, add the following line to your crontab:
 
-    0 0 * * * cd /path/containing/tpl-rss; ./tpl-rss.rb > books.atom
+    0 0 * * * cd /path/containing/tpl-rss; ./tpl-rss.rb $LIBRARY_CARD_NUMBER $PIN $PATH_TO_OUTPUT_FILE
 
 Then you can just add the URL for the books.atom file you've just created to your feed reader and you're all set!
 
