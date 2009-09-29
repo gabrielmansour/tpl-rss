@@ -58,15 +58,14 @@ feed = Nokogiri::XML::Builder.new do
         book_link = book % "a"
         checkbox = book % "input"
         unless book_link.nil?
-          info = {}
           # RENEW^39100049582508^658.84 SWE^1^Sweeney, Susan, 1956-^101 Internet businesses you can start from home : how to choose and build your own successful e-business^
-          command, catno, callno, status, info[:author], info[:title] = *checkbox['name'].to_s.split(/\^/) if checkbox
+          command, catno, callno, status, author, title = *checkbox['name'].to_s.split(/\^/) if checkbox
           due_date = (book/"td:nth-child(4)").text.strip
           clean_href = book_link['href'].sub(/\/uhtbin\/cgisirsi\/.*\?/, "/uhtbin/cgisirsi/x/0/0/5/3?") # strip out session information from URL
           
           f.entry do
-            title    info[:title]
-            author   info[:author]
+            title    title
+            author   author
             id_      "tag:torontopubliclibrary.ca,2008;#{catno}"
             updated  Time.now.iso8601
             link     :rel => 'alternate', :href => "#{CATALOGUE_URL}#{clean_href}#catno#{catno}"
